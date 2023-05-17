@@ -1,3 +1,6 @@
 [submodule "thirdparty/UBytesAppPlatform"]
 	path = thirdparty/UBytesAppPlatform
 	url = https://github.com/UnstableBytes/AppPlatform
+[submodule "thirdparty/phoenix"]
+	path = thirdparty/phoenix
+	url = https://github.com/GothicKit/phoenix
