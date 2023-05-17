@@ -1,0 +1,3 @@
+[submodule "thirdparty/UBytesAppPlatform"]
+	path = thirdparty/UBytesAppPlatform
+	url = https://github.com/UnstableBytes/AppPlatform
