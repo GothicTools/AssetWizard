@@ -30,3 +30,10 @@ to a user interface.
 
 The `Backend` folder contains the C++ code that handles all the heavy lifting
 such as parsing VDF files, compiling assets, etc.
+
+### Libraries used
+
+We use a bunch of helper libraries:
+
+- [AppPlatform](https://github.com/UnstableBytes/AppPlatform) - integration of a webview into a C++ application
+- [phoenix](https://github.com/GothicKit/phoenix) - managing Gothic assets
