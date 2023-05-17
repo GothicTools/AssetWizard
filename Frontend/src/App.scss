@@ -1,0 +1,29 @@
+#AppContainer {
+  display: block;
+  width: 100%;
+  height: calc(100% - var(--app-navbar-height));
+}
+
+
+#AppContainer[data-is-in-engine="false"]
+{
+  background-color: rgba(10, 10, 10, 1);
+}
+
+.default-dock-panel {
+  position: relative;
+  background-color: rgb(20, 20, 20);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.show-tab-header-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 6px;
+  height: 6px;
+  // background color with linear-gradient making triangle pointing to top-left corner
+  background: linear-gradient(135deg, rgb(255, 170, 0) 50%, rgba(255,255,255, 0) 51%);
+}

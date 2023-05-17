@@ -1,0 +1,31 @@
+.container {
+	display: flex;
+	height: var(--app-navbar-height);
+
+	justify-content: center;
+	background-color: rgb(20, 20, 20);
+	
+	position: relative;
+	border-bottom: 1px solid rgb(60, 60, 60);
+	box-sizing: border-box;
+}
+
+.control-region {
+	flex-grow: 1;
+	height: 100%;
+
+	app-region: drag;
+	-webkit-app-region: drag;
+}
+
+.app-icon{
+	margin-right: 10px;
+	app-region: drag;
+	-webkit-app-region: drag;
+
+	img {
+		display: block;
+		height: calc(var(--app-navbar-height) * 0.55);
+		padding: calc(var(--app-navbar-height) * 0.225);
+	}
+}
