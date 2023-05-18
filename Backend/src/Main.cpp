@@ -1,4 +1,5 @@
 #include <UBytes/AppPlatform/Everything.hpp>
+#include <rapidjson/document.h>
 
 #include <iostream>
 #include <filesystem>
@@ -6,11 +7,21 @@
 namespace fs   = std::filesystem;
 namespace uapp = ubytes::app_platform;
 
+static auto shrink(uapp::Rect2i rect, int amount) -> uapp::Rect2i
+{
+  return uapp::Rect2i{rect.x + amount, rect.y + amount, rect.w - amount * 2, rect.h - amount * 2};
+}
+
+static auto calc_webview_size(uapp::Rect2u window_size) -> uapp::Rect2i
+{
+  return shrink({0, 0, int(window_size.w), int(window_size.h)}, 4);
+}
+
 struct CustomWindow : uapp::Window
 {
   auto on_resize(uapp::Rect2u size) -> void override
   {
-    web_view.set_bounds(uapp::Rect2i{4, 4, int(size.w) - 8, int(size.h) - 8});
+    web_view.set_bounds(calc_webview_size(size));
   }
 
   uapp::WebView web_view;
@@ -34,12 +45,36 @@ struct CustomAppHandler : uapp::AppInterface
       auto current_dir = fs::current_path();
 
       auto inner_size = main_window->get_inner_size();
-      web_view.set_bounds(uapp::Rect2i{4, 4, int(inner_size.w - 8), int(inner_size.h - 8)});
-      // web_view.navigate(L"http://localhost:3000");
-      web_view.navigate(L"file://" + (current_dir / "data/frontend/index.html").wstring());
+      web_view.set_bounds(calc_webview_size(inner_size));
+      web_view.navigate(L"http://localhost:3000");
+      // web_view.navigate(L"file://" + (current_dir / "data/frontend/index.html").wstring());
     };
 
-    web_view.on_message = [&](std::string message) { std::cout << "Message from webview: " << message << std::endl; };
+    web_view.on_message = [&](std::string message)
+    {
+      namespace rj = rapidjson;
+      auto doc     = rj::Document();
+      doc.Parse(message.data(), message.size());
+      if (doc.HasParseError()) {
+        std::cout << "Failed to parse message\n";
+        return;
+      }
+
+      auto& type = doc["type"];
+      if (type == "event") {
+        auto& name = doc["name"];
+        if (name == "closed") {
+          main_window->request_close();
+        }
+        else if (name == "maximized") {
+          main_window->request_toggle_maximize();
+        }
+        else if (name == "minimized") {
+          main_window->request_minimize();
+        }
+      }
+      std::cout << "Message from webview: " << message << "\n";
+    };
   }
 
   std::unique_ptr<CustomWindow> main_window;
