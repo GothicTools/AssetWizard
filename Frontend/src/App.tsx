@@ -191,7 +191,7 @@ export const App: React.FC = () => {
 
   };
 
-  const handleClosed = () => {
+  const handleWindowControlEvent = (name: string) => {
     const webview = getWebviewApi();
     if (!webview) {
       return;
@@ -199,25 +199,25 @@ export const App: React.FC = () => {
 
     webview.postMessage({
       type: "event",
-      name: "closed",
+      name
     });
   };
 
-  const handleMaximized = () => {
-    const webview = getWebviewApi();
-    if (!webview) {
-      return;
-    }
+  const handleMinimized = () => {
+    handleWindowControlEvent("minimized");
+  };
 
-    // webview.postMessage({
-    //   type: "event",
-    //   name: "maximized",
-    // });
+  const handleMaximized = () => {
+    handleWindowControlEvent("maximized");
+  };
+
+  const handleClosed = () => {
+    handleWindowControlEvent("closed");
   };
 
   return (
     <div id="AppContainer" data-is-in-engine={hasWebviewApi() ? "false" : "false"}>
-      <Navbar onClose={handleClosed} onMaximize={handleMaximized}/>
+      <Navbar onMinimize={handleMinimized} onMaximize={handleMaximized} onClose={handleClosed}/>
       <DockviewReact
         components={components}
         onReady={onReady}
