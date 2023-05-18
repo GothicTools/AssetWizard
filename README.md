@@ -1,13 +1,11 @@
 # Gothic Asset Wizard
 
-An all-in-one tool for browsing, editing, previewing and compiling Gothic assets.
+<img alt="Gothic Asset Wizard Icon" src="Icon.ico" width="90px"/>
 
-> **Note:**  
+An all-in-one tool for browsing, editing, previewing and compiling Gothic assets, written in C++20 and React TS.
+
+> **Warning**  
 > This project is still in early development and is not yet ready for use.
-
-Technologies used:
-- backend: C++20
-- frontend: React using TypeScript
 
 ## Preview
 
