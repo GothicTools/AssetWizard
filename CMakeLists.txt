@@ -12,8 +12,6 @@ file(GLOB_RECURSE BACKEND_SOURCES
 set(APP_NAME GothicAssetWizard)
 add_executable(${APP_NAME} ${BACKEND_SOURCES} Icon.rc)
 
-target_include_directories(${APP_NAME} PUBLIC "thirdparty/rapidjson/include")
-
 set_target_properties(${APP_NAME} PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug
 	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug
@@ -25,3 +23,13 @@ set_target_properties(${APP_NAME} PROPERTIES
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/UBytesAppPlatform)
 target_link_libraries(${APP_NAME} AppPlatform)
+
+
+# Libraries
+
+## RapidJSON
+target_include_directories(${APP_NAME} PUBLIC "thirdparty/rapidjson/include")
+
+## fmt 10.0.0
+add_subdirectory("thirdparty/fmt" EXCLUDE_FROM_ALL)
+target_link_libraries(${APP_NAME} fmt::fmt)

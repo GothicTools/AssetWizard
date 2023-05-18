@@ -1,7 +1,7 @@
 #include <UBytes/AppPlatform/Everything.hpp>
 #include <rapidjson/document.h>
 
-#include <iostream>
+#include <fmt/core.h>
 #include <filesystem>
 
 namespace fs   = std::filesystem;
@@ -46,8 +46,8 @@ struct CustomAppHandler : uapp::AppInterface
 
       auto inner_size = main_window->get_inner_size();
       web_view.set_bounds(calc_webview_size(inner_size));
-      // web_view.navigate(L"http://localhost:3000");
-      web_view.navigate(L"file://" + (current_dir / "data/frontend/index.html").wstring());
+      web_view.navigate(L"http://localhost:3000");
+      // web_view.navigate(L"file://" + (current_dir / "data/frontend/index.html").wstring());
     };
 
     web_view.on_message = [&](std::string message)
@@ -56,7 +56,7 @@ struct CustomAppHandler : uapp::AppInterface
       auto doc     = rj::Document();
       doc.Parse(message.data(), message.size());
       if (doc.HasParseError()) {
-        std::cout << "Failed to parse message\n";
+        fmt::print("Failed to parse message\n");
         return;
       }
 
@@ -73,7 +73,7 @@ struct CustomAppHandler : uapp::AppInterface
           main_window->request_minimize();
         }
       }
-      std::cout << "Message from webview: " << message << "\n";
+      fmt::print("Message from webview: {}\n", message);
     };
   }
 
