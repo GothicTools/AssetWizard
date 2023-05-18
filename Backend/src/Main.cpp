@@ -1,8 +1,13 @@
 #include <UBytes/AppPlatform/Everything.hpp>
-#include <rapidjson/document.h>
 
+#include <rapidjson/document.h>
 #include <fmt/core.h>
+
 #include <filesystem>
+#include <cassert>
+
+#include "App/ProgramArgs.hpp"
+#include "UI/FrontendUtil.hpp"
 
 namespace fs   = std::filesystem;
 namespace uapp = ubytes::app_platform;
@@ -16,6 +21,7 @@ static auto calc_webview_size(uapp::Rect2u window_size) -> uapp::Rect2i
 {
   return shrink({0, 0, int(window_size.w), int(window_size.h)}, 4);
 }
+
 
 struct CustomWindow : uapp::Window
 {
@@ -46,8 +52,7 @@ struct CustomAppHandler : uapp::AppInterface
 
       auto inner_size = main_window->get_inner_size();
       web_view.set_bounds(calc_webview_size(inner_size));
-      // web_view.navigate(L"http://localhost:3000");
-      web_view.navigate(L"file://" + (current_dir / "data/frontend/index.html").wstring());
+      web_view.navigate(get_frontend_url());
     };
 
     web_view.on_message = [&](std::string message)
@@ -92,9 +97,11 @@ private:
   CustomAppHandler _app_platform_interface;
 };
 
-auto main() -> int
+auto main(int argc, char* argv[]) -> int
 {
-  auto app = Application();
+  // One-time operation for convenient access later.
+  store_program_args(argc, argv);
 
+  auto app = Application();
   return uapp::run_default(app.get_app_platform_interface());
 }
