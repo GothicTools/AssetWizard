@@ -42,14 +42,16 @@ export function ExitButton(props: ButtonProps) {
 }
 
 type WindowControlProps = {
+	onMinimize: () => void;
+	onMaximize: () => void;
 	onClose: () => void;
 }
 
 export default function WindowControl(props: WindowControlProps) {
 	return (
 		<div className={styles.container}>
-			<MinimizeButton onClick={props.onClose}/>
-			<MaximizeButton onClick={props.onClose}/>
+			<MinimizeButton onClick={props.onMinimize}/>
+			<MaximizeButton onClick={props.onMaximize}/>
 			<ExitButton onClick={props.onClose}/>
 		</div>
 	);

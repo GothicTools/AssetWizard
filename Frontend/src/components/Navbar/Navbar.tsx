@@ -3,8 +3,9 @@ import styles from "./Navbar.module.scss";
 import { Menu, WindowControl } from "..";
 
 export type NavbarProps = {
-	onClose: () => void;
+	onMinimize: () => void;
 	onMaximize: () => void;
+	onClose: () => void;
 }
 
 function AppIcon() {
@@ -17,38 +18,12 @@ function AppIcon() {
 
 export default function Navbar(props: NavbarProps)
 {
-	type DragEvent = React.DragEvent<HTMLDivElement>;
-
-	const handleDoubleClick = (event: React.MouseEvent) => {
-		if (event.target !== event.currentTarget) {
-			return;
-		}
-
-		props.onMaximize();
-	}
-	;
-	const handleDrag = (event: DragEvent) => {
-		if (event.target !== event.currentTarget) {
-			return;
-		}
-
-		props.onMaximize();
-	};
-
-	const handleMouseDown = (event: React.MouseEvent) => {
-		if (event.target !== event.currentTarget) {
-			return;
-		}
-
-		props.onMaximize();
-	};
-
 	return (
-		<div className={styles.container} onMouseDown={handleMouseDown}>
+		<div className={styles.container}>
 			<AppIcon />
 			<Menu />
 			<div className={styles["control-region"]}></div>
-			<WindowControl onClose={props.onClose} />
+			<WindowControl onMinimize={props.onMinimize} onMaximize={props.onMaximize} onClose={props.onClose}  />
 		</div>
 	);
 }

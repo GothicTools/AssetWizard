@@ -12,6 +12,8 @@ file(GLOB_RECURSE BACKEND_SOURCES
 set(APP_NAME GothicAssetWizard)
 add_executable(${APP_NAME} ${BACKEND_SOURCES} Icon.rc)
 
+target_include_directories(${APP_NAME} PUBLIC "thirdparty/rapidjson/include")
+
 set_target_properties(${APP_NAME} PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug
 	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug
