@@ -46,8 +46,8 @@ struct CustomAppHandler : uapp::AppInterface
 
       auto inner_size = main_window->get_inner_size();
       web_view.set_bounds(calc_webview_size(inner_size));
-      web_view.navigate(L"http://localhost:3000");
-      // web_view.navigate(L"file://" + (current_dir / "data/frontend/index.html").wstring());
+      // web_view.navigate(L"http://localhost:3000");
+      web_view.navigate(L"file://" + (current_dir / "data/frontend/index.html").wstring());
     };
 
     web_view.on_message = [&](std::string message)
